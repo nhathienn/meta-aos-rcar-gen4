@@ -1,0 +1,41 @@
+From 7bba47ef5c0600b5eb183d1395326aa76aaf6714 Mon Sep 17 00:00:00 2001
+From: Leonid Komarianskyi <leonid_komarianskyi@epam.com>
+Date: Mon, 15 Jan 2024 22:54:20 +0200
+Subject: [PATCH 1/4] arm64: dts: renesas: add gpio7 node
+
+This GPIO is required for further CANFD functionality.
+
+Signed-off-by: Phat Pham <phat.pham.zg@renesas.com>
+Signed-off-by: Leonid Komarianskyi <leonid_komarianskyi@epam.com>
+---
+ arch/arm64/boot/dts/renesas/r8a779f0.dtsi | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/renesas/r8a779f0.dtsi b/arch/arm64/boot/dts/renesas/r8a779f0.dtsi
+index ddda2fc3acd0..2a9253aed566 100644
+--- a/arch/arm64/boot/dts/renesas/r8a779f0.dtsi
++++ b/arch/arm64/boot/dts/renesas/r8a779f0.dtsi
+@@ -389,6 +389,20 @@ gpio3: gpio@e6051980 {
+ 		resets = <&cpg 915>;
+ 		};
+ 
++		gpio7: gpio@dfd91980 {
++			compatible = "renesas,gpio-r8a779f0";
++			reg = <0 0xdfd91980 0 0x54>;
++			interrupts = <GIC_SPI 829 IRQ_TYPE_LEVEL_HIGH>;
++			#gpio-cells = <2>;
++			gpio-controller;
++			gpio-ranges = <&pfc 0 224 32>;
++			#interrupt-cells = <2>;
++			interrupt-controller;
++			clocks = <&cpg CPG_MOD 915>;
++			power-domains = <&sysc R8A779F0_PD_ALWAYS_ON>;
++			resets = <&cpg 915>;
++		};
++
+ 		cpg: clock-controller@e6150000 {
+ 			compatible = "renesas,r8a779f0-cpg-mssr";
+ 			reg = <0 0xe6150000 0 0x4000>;
+-- 
+2.25.1
+

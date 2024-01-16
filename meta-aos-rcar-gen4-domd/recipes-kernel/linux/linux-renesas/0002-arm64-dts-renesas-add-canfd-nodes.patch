@@ -1,0 +1,333 @@
+From a68a3e35788340da1ae27cb7836d574052336f48 Mon Sep 17 00:00:00 2001
+From: Leonid Komarianskyi <leonid_komarianskyi@epam.com>
+Date: Mon, 15 Jan 2024 23:25:38 +0200
+Subject: [PATCH 2/4] arm64: dts: renesas: add canfd nodes
+
+Update Canfd device nodes in device tree R9A779F0.
+
+Signed-off-by: Phat Pham <phat.pham.zg@renesas.com>
+Signed-off-by: Leonid Komarianskyi <leonid_komarianskyi@epam.com>
+---
+ .../boot/dts/renesas/r8a779f0-spider.dts      | 160 ++++++++++++++++++
+ arch/arm64/boot/dts/renesas/r8a779f0.dtsi     | 113 ++++++++++++-
+ 2 files changed, 272 insertions(+), 1 deletion(-)
+
+diff --git a/arch/arm64/boot/dts/renesas/r8a779f0-spider.dts b/arch/arm64/boot/dts/renesas/r8a779f0-spider.dts
+index 538f413fbffd..0d6b21fe0c07 100644
+--- a/arch/arm64/boot/dts/renesas/r8a779f0-spider.dts
++++ b/arch/arm64/boot/dts/renesas/r8a779f0-spider.dts
+@@ -27,6 +27,86 @@ eeprom@51 {
+ 	};
+ };
+ 
++&canfd0 {
++	pinctrl-0 = <&canfd0_pins>, <&canfd1_pins>, <&canfd2_pins>,
++				<&canfd3_pins>, <&canfd4_pins>, <&canfd5_pins>,
++				<&canfd6_pins>, <&canfd7_pins>;
++	pinctrl-names = "default";
++	status = "okay";
++
++	channel0 {
++		status = "okay";
++	};
++
++	channel1 {
++		status = "okay";
++	};
++
++	channel2 {
++		status = "okay";
++	};
++
++	channel3 {
++		status = "okay";
++	};
++
++	channel4 {
++		status = "okay";
++	};
++
++	channel5 {
++		status = "okay";
++	};
++
++	channel6 {
++		status = "okay";
++	};
++
++	channel7 {
++		status = "okay";
++	};
++};
++
++&canfd1 {
++	pinctrl-0 = <&canfd8_pins>,<&canfd9_pins>, <&canfd10_pins>, 
++				<&canfd11_pins>, <&canfd12_pins>, <&canfd13_pins>, 
++				<&canfd14_pins>, <&canfd15_pins>;
++	pinctrl-names = "default";
++	status = "okay";
++
++	channel0 {
++		status = "okay";
++	};
++
++	channel1 {
++		status = "okay";
++	};
++
++	channel2 {
++		status = "okay";
++	};
++
++	channel3 {
++		status = "okay";
++	};
++
++	channel4 {
++		status = "okay";
++	};
++
++	channel5 {
++		status = "okay";
++	};
++
++	channel6 {
++		status = "okay";
++	};
++
++	channel7 {
++		status = "okay";
++	};
++};
++
+ &pfc {
+ 	tsn0_pins: tsn0 {
+ 		mux {
+@@ -73,6 +153,86 @@ pins_mdio {
+ 		};
+ 	};
+ 
++	canfd0_pins: canfd0 {
++		groups = "canfd0_data";
++		function = "canfd0";
++	};
++
++	canfd1_pins: canfd1 {
++		groups = "canfd1_data";
++		function = "canfd1";
++	};
++
++	canfd2_pins: canfd2 {
++		groups = "canfd2_data";
++		function = "canfd2";
++	};
++
++	canfd3_pins: canfd3 {
++		groups = "canfd3_data";
++		function = "canfd3";
++	};
++
++	canfd4_pins: canfd4 {
++		groups = "canfd4_data";
++		function = "canfd4";
++	};
++
++	canfd5_pins: canfd5 {
++		groups = "canfd5_data";
++		function = "canfd5";
++	};
++
++	canfd6_pins: canfd6 {
++		groups = "canfd6_data";
++		function = "canfd6";
++	};
++
++	canfd7_pins: canfd7 {
++		groups = "canfd7_data";
++		function = "canfd7";
++	};
++
++	canfd8_pins: canfd8 {
++		groups = "canfd8_data";
++		function = "canfd8";
++	};
++
++	canfd9_pins: canfd9 {
++		groups = "canfd9_data";
++		function = "canfd9";
++	};
++
++	canfd10_pins: canfd10 {
++		groups = "canfd10_data";
++		function = "canfd10";
++	};
++
++	canfd11_pins: canfd11 {
++		groups = "canfd11_data";
++		function = "canfd11";
++	};
++
++	canfd12_pins: canfd12 {
++		groups = "canfd12_data";
++		function = "canfd12";
++	};
++
++	canfd13_pins: canfd13 {
++		groups = "canfd13_data";
++		function = "canfd13";
++	};
++
++	canfd14_pins: canfd14 {
++		groups = "canfd14_data";
++		function = "canfd14";
++	};
++
++	canfd15_pins: canfd15 {
++		groups = "canfd15_data";
++		function = "canfd15";
++	};
++
+ 	pcie0_pins: pcie0 {
+ 		groups = "pcie0_clkreq_n";
+ 		function = "pcie";
+diff --git a/arch/arm64/boot/dts/renesas/r8a779f0.dtsi b/arch/arm64/boot/dts/renesas/r8a779f0.dtsi
+index 2a9253aed566..d3975aeb5e97 100644
+--- a/arch/arm64/boot/dts/renesas/r8a779f0.dtsi
++++ b/arch/arm64/boot/dts/renesas/r8a779f0.dtsi
+@@ -23,6 +23,13 @@ aliases {
+ 		i2c5 = &i2c5;
+ 	};
+ 
++	/* External CAN clock - to be overridden by boards that provide it */
++	can_clk: can {
++		compatible = "fixed-clock";
++		#clock-cells = <0>;
++		clock-frequency = <40000000>;
++	};
++
+ 	cluster1_opp: opp_table10 {
+ 		compatible = "operating-points-v2";
+ 		opp-shared;
+@@ -329,7 +336,7 @@ pfc: pin-controller@e6050000 {
+ 			compatible = "renesas,pfc-r8a779f0";
+ 			reg = <0 0xe6050000 0 0x16c>, <0 0xe6050800 0 0x16c>,
+ 			      <0 0xe6051000 0 0x16c>, <0 0xe6051800 0 0x16c>,
+-			      <0 0xdfd90000 0 0x16c>, <0 0xdfd90800 0 0x16c>,
++				  <0 0xdfd90000 0 0x16c>, <0 0xdfd90800 0 0x16c>,
+ 			      <0 0xdfd91000 0 0x16c>, <0 0xdfd91800 0 0x16c>;
+ 		};
+ 
+@@ -424,6 +431,110 @@ sysc: system-controller@e6180000 {
+ 			#power-domain-cells = <1>;
+ 		};
+ 
++		canfd0: can@dff50000 {	
++			compatible = "renesas,r8a779f0-canfd";
++			reg = <0 0xdff50000 0 0x8600>;
++			interrupts = <GIC_SPI 534 IRQ_TYPE_LEVEL_HIGH>,
++					 <GIC_SPI 535 IRQ_TYPE_LEVEL_HIGH>,
++					 <GIC_SPI 536 IRQ_TYPE_LEVEL_HIGH>,
++					 <GIC_SPI 537 IRQ_TYPE_LEVEL_HIGH>,
++					 <GIC_SPI 538 IRQ_TYPE_LEVEL_HIGH>,
++					 <GIC_SPI 539 IRQ_TYPE_LEVEL_HIGH>,
++					 <GIC_SPI 540 IRQ_TYPE_LEVEL_HIGH>,
++					 <GIC_SPI 541 IRQ_TYPE_LEVEL_HIGH>,
++					 <GIC_SPI 542 IRQ_TYPE_LEVEL_HIGH>;
++			clocks = <&can_clk>;
++			clock-names = "can_clk";
++			assigned-clocks = <&can_clk>;
++			assigned-clock-rates = <40000000>;
++			power-domains = <&sysc R8A779F0_PD_ALWAYS_ON>;
++			status = "okay";
++
++			channel0 {
++				status = "disabled";
++			};
++
++			channel1 {
++				status = "disabled";
++			};
++
++			channel2 {
++				status = "disabled";
++			};
++
++			channel3 {
++				status = "disabled";
++			};
++
++			channel4 {
++				status = "disabled";
++			};
++
++			channel5 {
++				status = "disabled";
++			};
++
++			channel6 {
++				status = "disabled";
++			};
++
++			channel7 {
++				status = "disabled";
++			};		
++		};
++
++		canfd1: can@dfd00000 {	
++			compatible = "renesas,r8a779f0-canfd";
++			reg = <0 0xdfd00000 0 0x8600>;
++			interrupts = <GIC_SPI 543 IRQ_TYPE_LEVEL_HIGH>,
++					 <GIC_SPI 544 IRQ_TYPE_LEVEL_HIGH>,
++					 <GIC_SPI 545 IRQ_TYPE_LEVEL_HIGH>,
++					 <GIC_SPI 546 IRQ_TYPE_LEVEL_HIGH>,
++					 <GIC_SPI 547 IRQ_TYPE_LEVEL_HIGH>,
++					 <GIC_SPI 548 IRQ_TYPE_LEVEL_HIGH>,
++					 <GIC_SPI 549 IRQ_TYPE_LEVEL_HIGH>,
++					 <GIC_SPI 550 IRQ_TYPE_LEVEL_HIGH>,
++					 <GIC_SPI 551 IRQ_TYPE_LEVEL_HIGH>;
++			clocks = <&can_clk>;
++			clock-names = "can_clk";
++			assigned-clocks = <&can_clk>;
++			assigned-clock-rates = <40000000>;
++			power-domains = <&sysc R8A779F0_PD_ALWAYS_ON>;
++			status = "okay";
++
++			channel0 {
++				status = "disabled";
++			};
++
++			channel1 {
++				status = "disabled";
++			};
++
++			channel2 {
++				status = "disabled";
++			};
++
++			channel3 {
++				status = "disabled";
++			};
++
++			channel4 {
++				status = "disabled";
++			};
++
++			channel5 {
++				status = "disabled";
++			};
++
++			channel6 {
++				status = "disabled";
++			};
++
++			channel7 {
++				status = "disabled";
++			};			
++		};
++
+ 		i2c0: i2c@e6500000 {
+ 			compatible = "renesas,i2c-r8a779f0",
+ 				     "renesas,rcar-gen4-i2c";
+-- 
+2.25.1
+

@@ -46,8 +46,8 @@ common_data:
       url: "https://github.com/xen-troops/meta-xt-common.git"
       rev: "e27c46b"
     - type: git
-      url: "https://github.com/aoscloud/meta-aos-rcar-gen4.git"
-      rev: "v1.0.0"
+      url: "https://github.com/nhathienn/meta-aos-rcar-gen4.git"
+      rev: "master"
   # Common configuration options for all yocto-based domains
   conf: &COMMON_CONF
     - [SSTATE_DIR, "${TOPDIR}/../../../common_data/sstate"]
